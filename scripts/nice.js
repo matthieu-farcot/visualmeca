@@ -25,7 +25,7 @@ AFRAME.registerComponent("cycle-piston", {
 
         this.piston.setAttribute("animation__move", {
             property: "position",
-            to: `${this.pistonPos.x} ${this.pistonPos.y-0.26} ${this.pistonPos.z}`,
+            to: `${this.pistonPos.x} ${this.pistonPos.y-0.249} ${this.pistonPos.z}`,
             dur: 1000,
             easing: "linear"
         });
@@ -37,12 +37,6 @@ AFRAME.registerComponent("cycle-piston", {
             easing: "linear"
         });
 
-        this.pg.setAttribute("animation__rot", {
-            property: "rotation",
-            to: `${this.pgRot.x} ${this.pgRot.y} ${this.pgRot.z+90}`,
-            dur: 1000,
-            easing: "linear"
-        });
 
         this.piston.addEventListener("animationcomplete__move",
             () => this.bbRetour(),
@@ -68,12 +62,6 @@ AFRAME.registerComponent("cycle-piston", {
             easing: "linear"
         });
 
-        this.pg.setAttribute("animation__rot", {
-            property: "rotation",
-            to: `${this.pgRot.x} ${this.pgRot.y} ${this.pgRot.z}`,
-            dur: 1000,
-            easing: "linear"
-        });
 
         this.piston.addEventListener("animationcomplete__move",
             () => this.ccAller(),
