@@ -11,7 +11,7 @@ AFRAME.registerComponent("cycle-piston", {
         this.pistonPos = this.piston.object3D.position.clone();
         this.mobilePos = this.mobile.object3D.position.clone();
 
-        // Rotations d'origine (en degrés)
+        // Rotations d'origine
         this.pdRot = this.pd.getAttribute("rotation");
         this.pgRot = this.pg.getAttribute("rotation");
 
@@ -19,7 +19,7 @@ AFRAME.registerComponent("cycle-piston", {
     },
 
     //-----------------------------
-    // BB ALLER
+    // BB ALLER (descente)
     //-----------------------------
     bbAller() {
 
@@ -37,13 +37,15 @@ AFRAME.registerComponent("cycle-piston", {
             easing: "linear"
         });
 
-
-        this.piston.addEventListener("animationcomplete__move",
-
+        this.piston.addEventListener(
+            "animationcomplete__move",
+            () => this.ccAller(),
+            { once: true }
+        );
     },
 
-        //-----------------------------
-    // CC ALLER
+    //-----------------------------
+    // CC ALLER (déplacement à droite)
     //-----------------------------
     ccAller() {
 
@@ -61,8 +63,11 @@ AFRAME.registerComponent("cycle-piston", {
             easing: "linear"
         });
 
-        this.mobile.addEventListener("animationcomplete__move",
-
+        this.mobile.addEventListener(
+            "animationcomplete__move",
+            () => this.ccRetour(),
+            { once: true }
+        );
     },
 
     //-----------------------------
@@ -84,12 +89,15 @@ AFRAME.registerComponent("cycle-piston", {
             easing: "linear"
         });
 
-        this.mobile.addEventListener("animationcomplete__move",
-
+        this.mobile.addEventListener(
+            "animationcomplete__move",
+            () => this.bbRetour(),
+            { once: true }
+        );
     },
 
     //-----------------------------
-    // BB RETOUR
+    // BB RETOUR (remontée)
     //-----------------------------
     bbRetour() {
 
@@ -107,9 +115,11 @@ AFRAME.registerComponent("cycle-piston", {
             easing: "linear"
         });
 
-
-        this.piston.addEventListener("animationcomplete__move",
-
+        this.piston.addEventListener(
+            "animationcomplete__move",
+            () => this.bbAller(),
+            { once: true }
+        );
     }
 
 });
