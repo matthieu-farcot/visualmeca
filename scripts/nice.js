@@ -39,8 +39,7 @@ AFRAME.registerComponent("cycle-piston", {
 
 
         this.piston.addEventListener("animationcomplete__move",
-            () => this.bbRetour(),
-            {once:true});
+
     },
 
         //-----------------------------
@@ -63,8 +62,7 @@ AFRAME.registerComponent("cycle-piston", {
         });
 
         this.mobile.addEventListener("animationcomplete__move",
-            () => this.ccRetour(),
-            {once:true});
+
     },
 
     //-----------------------------
@@ -87,8 +85,7 @@ AFRAME.registerComponent("cycle-piston", {
         });
 
         this.mobile.addEventListener("animationcomplete__move",
-            () => this.bbAller(),
-            {once:true});
+
     },
 
     //-----------------------------
@@ -112,8 +109,7 @@ AFRAME.registerComponent("cycle-piston", {
 
 
         this.piston.addEventListener("animationcomplete__move",
-            () => this.ccAller(),
-            {once:true});
+
     }
 
 });
