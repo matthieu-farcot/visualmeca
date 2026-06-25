@@ -43,32 +43,7 @@ AFRAME.registerComponent("cycle-piston", {
             {once:true});
     },
 
-    //-----------------------------
-    // BB RETOUR
-    //-----------------------------
-    bbRetour() {
-
-        this.piston.setAttribute("animation__move", {
-            property: "position",
-            to: `${this.pistonPos.x} ${this.pistonPos.y} ${this.pistonPos.z}`,
-            dur: 1000,
-            easing: "linear"
-        });
-
-        this.pd.setAttribute("animation__rot", {
-            property: "rotation",
-            to: `${this.pdRot.x} ${this.pdRot.y} ${this.pdRot.z}`,
-            dur: 1000,
-            easing: "linear"
-        });
-
-
-        this.piston.addEventListener("animationcomplete__move",
-            () => this.ccAller(),
-            {once:true});
-    },
-
-    //-----------------------------
+        //-----------------------------
     // CC ALLER
     //-----------------------------
     ccAller() {
@@ -113,6 +88,31 @@ AFRAME.registerComponent("cycle-piston", {
 
         this.mobile.addEventListener("animationcomplete__move",
             () => this.bbAller(),
+            {once:true});
+    },
+
+    //-----------------------------
+    // BB RETOUR
+    //-----------------------------
+    bbRetour() {
+
+        this.piston.setAttribute("animation__move", {
+            property: "position",
+            to: `${this.pistonPos.x} ${this.pistonPos.y} ${this.pistonPos.z}`,
+            dur: 1000,
+            easing: "linear"
+        });
+
+        this.pd.setAttribute("animation__rot", {
+            property: "rotation",
+            to: `${this.pdRot.x} ${this.pdRot.y} ${this.pdRot.z}`,
+            dur: 1000,
+            easing: "linear"
+        });
+
+
+        this.piston.addEventListener("animationcomplete__move",
+            () => this.ccAller(),
             {once:true});
     }
 
