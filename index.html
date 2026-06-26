@@ -1,99 +1,156 @@
-<a-entity id="CoupeBB"
-          position="-0.92471 1.75 -0.604"
-          cycle-piston>
+<!DOCTYPE html>
+<html>
 
-    <a-image
-        src="./images/position.png"
-        scale="0.866 1.18 1"
-        position="-0.005 -0.005 0"
-        material="opacity:0.75">
-    </a-image>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script src="./scripts/nice.js"></script>
 
-    <!-- Déplacement vertical -->
-    <a-entity id="piston"
-              position="0 0 0"
+    <script>
+        if (window.AFRAME && AFRAME.THREE) {
+            window.THREE = AFRAME.THREE;
+        }
+    </script>
 
-              animation__bbdown="
-                  property: position;
-                  to: 0 -0.249 0;
-                  dur:1000;
-                  easing:linear;
-                  startEvents:bbdown"
+</head>
 
-              animation__bbup="
-                  property: position;
-                  to: 0 0 0;
-                  dur:1000;
-                  easing:linear;
-                  startEvents:bbup">
+<body>
 
-        <!-- Partie gauche -->
+<a-scene>
 
-        <a-entity id="pistond"
-                  gltf-model="./objets/piston.glb"
-                  position="-0.23316 0.2834 -0.00158"
-                  rotation="0 -90 0"
-                  scale="0.09 0.09 0.09"
+    <a-camera position="0 2 0"></a-camera>
 
-                  animation__bbdown="
-                      property:rotation;
-                      to:0 -90 -90;
-                      dur:1000;
-                      easing:linear;
-                      startEvents:bbdown"
+    <a-sky src="./images/puydesancy.jpg"></a-sky>
 
-                  animation__bbup="
-                      property:rotation;
-                      to:0 -90 0;
-                      dur:1000;
-                      easing:linear;
-                      startEvents:bbup">
-        </a-entity>
+    <a-text
+        value="Atelier positionnement des vues"
+        position="-1.5194 2.56002 -0.60274">
+    </a-text>
 
 
-        <!-- Partie mobile -->
+    <a-entity
+        id="CoupeBB"
+        position="-0.92471 1.75 -0.604"
+        cycle-piston>
 
-        <a-entity id="pistonmobile"
+        <a-image
+            src="./images/position.png"
+            position="-0.005 -0.005 0"
+            scale="0.866 1.18 1"
+            material="opacity:0.75">
+        </a-image>
 
-                  position="0 0 0"
 
-                  animation__ccgo="
-                      property:position;
-                      to:0.19 0 0;
-                      dur:1000;
-                      easing:linear;
-                      startEvents:ccgo"
+        <!-- Déplacement vertical -->
 
-                  animation__ccback="
-                      property:position;
-                      to:0 0 0;
-                      dur:1000;
-                      easing:linear;
-                      startEvents:ccback">
+        <a-entity
 
-            <a-entity id="pistong"
-                      gltf-model="./objets/piston.glb"
-                      position="-0.17018 0.2834 -0.002"
-                      rotation="0 90 0"
-                      scale="0.09 0.09 0.09"
+            id="piston"
+            position="0 0 0"
 
-                      animation__ccgo="
-                          property:rotation;
-                          to:0 180 90;
-                          dur:1000;
-                          easing:linear;
-                          startEvents:ccgo"
+            animation__bbdown="
+                property: position;
+                to: 0 -0.249 0;
+                dur:1000;
+                easing:linear;
+                startEvents:bbdown"
 
-                      animation__ccback="
-                          property:rotation;
-                          to:0 90 0;
-                          dur:1000;
-                          easing:linear;
-                          startEvents:ccback">
+            animation__bbup="
+                property: position;
+                to:0 0 0;
+                dur:1000;
+                easing:linear;
+                startEvents:bbup">
+
+            <!-- piston gauche -->
+
+            <a-entity
+
+                id="pistond"
+
+                gltf-model="./objets/piston.glb"
+
+                position="-0.23316 0.2834 -0.00158"
+
+                rotation="0 -90 0"
+
+                scale="0.09 0.09 0.09"
+
+                animation__bbdown="
+                    property:rotation;
+                    to:0 -90 -90;
+                    dur:1000;
+                    easing:linear;
+                    startEvents:bbdown"
+
+                animation__bbup="
+                    property:rotation;
+                    to:0 -90 0;
+                    dur:1000;
+                    easing:linear;
+                    startEvents:bbup">
+
+            </a-entity>
+
+
+            <!-- Partie mobile -->
+
+            <a-entity
+
+                id="pistonmobile"
+
+                position="0 0 0"
+
+                animation__ccgo="
+                    property:position;
+                    to:0.19 0 0;
+                    dur:1000;
+                    easing:linear;
+                    startEvents:ccgo"
+
+                animation__ccback="
+                    property:position;
+                    to:0 0 0;
+                    dur:1000;
+                    easing:linear;
+                    startEvents:ccback">
+
+                <a-entity
+
+                    id="pistong"
+
+                    gltf-model="./objets/piston.glb"
+
+                    position="-0.17018 0.2834 -0.002"
+
+                    rotation="0 90 0"
+
+                    scale="0.09 0.09 0.09"
+
+                    animation__ccgo="
+                        property:rotation;
+                        to:0 180 90;
+                        dur:1000;
+                        easing:linear;
+                        startEvents:ccgo"
+
+                    animation__ccback="
+                        property:rotation;
+                        to:0 90 0;
+                        dur:1000;
+                        easing:linear;
+                        startEvents:ccback">
+
+                </a-entity>
+
             </a-entity>
 
         </a-entity>
 
     </a-entity>
 
-</a-entity>
+</a-scene>
+
+</body>
+
+</html>
