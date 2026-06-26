@@ -1,5 +1,9 @@
 AFRAME.registerComponent("cycle-piston", {
 
+    schema: {
+        vitesse: {default: 0.25}   // unités par seconde
+    },
+
     init() {
 
         this.piston = this.el.querySelector("#piston");
@@ -7,119 +11,109 @@ AFRAME.registerComponent("cycle-piston", {
         this.pd = this.el.querySelector("#pistond");
         this.pg = this.el.querySelector("#pistong");
 
-        // Positions d'origine
-        this.pistonPos = this.piston.object3D.position.clone();
-        this.mobilePos = this.mobile.object3D.position.clone();
+        // Références
+        this.y0 = this.piston.object3D.position.y;
+        this.x0 = this.mobile.object3D.position.x;
 
-        // Rotations d'origine
-        this.pdRot = this.pd.getAttribute("rotation");
-        this.pgRot = this.pg.getAttribute("rotation");
+        this.courseY = 0.249;
+        this.courseX = 0.19;
 
-        this.bbAller();
+        this.etat = 0;
+
     },
 
-    //-----------------------------
-    // BB ALLER (descente)
-    //-----------------------------
-    bbAller() {
+    tick(time, dt) {
 
-        this.piston.setAttribute("animation__move", {
-            property: "position",
-            to: `${this.pistonPos.x} ${this.pistonPos.y-0.249} ${this.pistonPos.z}`,
-            dur: 1000,
-            easing: "linear"
-        });
+        const dy = this.schema.vitesse * dt / 1000;
+        const dx = this.schema.vitesse * dt / 1000;
 
-        this.pd.setAttribute("animation__rot", {
-            property: "rotation",
-            to: `${this.pdRot.x} ${this.pdRot.y-90} ${this.pdRot.z-90}`,
-            dur: 1000,
-            easing: "linear"
-        });
+        switch(this.etat){
 
-        this.piston.addEventListener(
-            "animationcomplete__move",
-            () => this.ccAller(),
-            { once: true }
-        );
-    },
+        //--------------------------------------------------
+        // 0 Descente
+        //--------------------------------------------------
 
-    //-----------------------------
-    // CC ALLER (déplacement à droite)
-    //-----------------------------
-    ccAller() {
+        case 0:
 
-        this.mobile.setAttribute("animation__move", {
-            property: "position",
-            to: `${this.mobilePos.x+0.19} ${this.mobilePos.y} ${this.mobilePos.z}`,
-            dur: 1000,
-            easing: "linear"
-        });
+            this.piston.object3D.position.y -= dy;
 
-        this.pg.setAttribute("animation__rot", {
-            property: "rotation",
-            to: `${this.pgRot.x} 180 90`,
-            dur: 1000,
-            easing: "linear"
-        });
+            this.pd.object3D.rotation.z -= Math.PI/2 * dt/1000;
 
-        this.mobile.addEventListener(
-            "animationcomplete__move",
-            () => this.ccRetour(),
-            { once: true }
-        );
-    },
+            if(this.piston.object3D.position.y <= this.y0-this.courseY){
 
-    //-----------------------------
-    // CC RETOUR
-    //-----------------------------
-    ccRetour() {
+                this.piston.object3D.position.y=this.y0-this.courseY;
+                this.pd.object3D.rotation.z=-Math.PI/2;
 
-        this.mobile.setAttribute("animation__move", {
-            property: "position",
-            to: `${this.mobilePos.x} ${this.mobilePos.y} ${this.mobilePos.z}`,
-            dur: 1000,
-            easing: "linear"
-        });
+                this.etat=1;
 
-        this.pg.setAttribute("animation__rot", {
-            property: "rotation",
-            to: `${this.pgRot.x} ${this.pgRot.y} ${this.pgRot.z}`,
-            dur: 1000,
-            easing: "linear"
-        });
+            }
 
-        this.mobile.addEventListener(
-            "animationcomplete__move",
-            () => this.bbRetour(),
-            { once: true }
-        );
-    },
+        break;
 
-    //-----------------------------
-    // BB RETOUR (remontée)
-    //-----------------------------
-    bbRetour() {
+        //--------------------------------------------------
+        // 1 Déplacement droite
+        //--------------------------------------------------
 
-        this.piston.setAttribute("animation__move", {
-            property: "position",
-            to: `${this.pistonPos.x} ${this.pistonPos.y} ${this.pistonPos.z}`,
-            dur: 1000,
-            easing: "linear"
-        });
+        case 1:
 
-        this.pd.setAttribute("animation__rot", {
-            property: "rotation",
-            to: `${this.pdRot.x} ${this.pdRot.y} ${this.pdRot.z}`,
-            dur: 1000,
-            easing: "linear"
-        });
+            this.mobile.object3D.position.x += dx;
 
-        this.piston.addEventListener(
-            "animationcomplete__move",
-            () => this.bbAller(),
-            { once: true }
-        );
+            this.pg.object3D.rotation.y += Math.PI/2*dt/1000;
+
+            if(this.mobile.object3D.position.x>=this.x0+this.courseX){
+
+                this.mobile.object3D.position.x=this.x0+this.courseX;
+
+                this.etat=2;
+
+            }
+
+        break;
+
+        //--------------------------------------------------
+        // 2 Retour gauche
+        //--------------------------------------------------
+
+        case 2:
+
+            this.mobile.object3D.position.x -= dx;
+
+            this.pg.object3D.rotation.y -= Math.PI/2*dt/1000;
+
+            if(this.mobile.object3D.position.x<=this.x0){
+
+                this.mobile.object3D.position.x=this.x0;
+
+                this.etat=3;
+
+            }
+
+        break;
+
+        //--------------------------------------------------
+        // 3 Montée
+        //--------------------------------------------------
+
+        case 3:
+
+            this.piston.object3D.position.y += dy;
+
+            this.pd.object3D.rotation.z += Math.PI/2 * dt/1000;
+
+            if(this.piston.object3D.position.y>=this.y0){
+
+                this.piston.object3D.position.y=this.y0;
+
+                this.pd.object3D.rotation.z=0;
+
+                this.etat=0;
+
+            }
+
+        break;
+
+        }
+
     }
 
 });
