@@ -32,7 +32,7 @@ AFRAME.registerComponent("cycle-piston", {
 
         this.pd.setAttribute("animation__rot", {
             property: "rotation",
-            to: `${this.pdRot.x} ${this.pdRot.y-90} ${this.pdRot.z}`,
+            to: `${this.pdRot.x} ${this.pdRot.y-90} ${this.pdRot.z-90}`,
             dur: 1000,
             easing: "linear"
         });
